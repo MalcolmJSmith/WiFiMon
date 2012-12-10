@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>WiFi Monitor</title>
+		<link  type="text/css" rel="stylesheet" href="/style/">
+		<script type="text/javascript">
+			var xmlreq;
+			var meterSupported;
+			var aboutPressed = "N";
+			var exitPressed = "N";
+			
+			function initialise(){				
+				if ( document.getElementsByTagName("meter")[0].toString().indexOf("HTMLMeterElement") > -1) {
+					meterSupported = "Y";
+				} else {
+					meterSupported = "N";
+				}
+				
+				requestUpdate();
+			}	
+						
+			function receiveUpdate(){
+				var req = xmlreq;
+				if (req.readyState==4 && req.status==200) {
+								document.getElementById("serverText").innerHTML=req.responseText;
+				}
+			}
+			function requestUpdate(){
+				var req = new XMLHttpRequest();
+				xmlreq = req;
+				req.onreadystatechange = receiveUpdate;	
+				req.open("GET","/update/" + aboutPressed + exitPressed + meterSupported , true);
+				req.send();
+				exitPressed = "N";			
+				setTimeout("requestUpdate()",1000);
+			}
+			
+			function toggleAbout() {
+				if (aboutPressed == "N") {
+					aboutPressed = "Y";
+				} else {
+					aboutPressed = "N";
+				}
+			}
+			
+			function toggleExit() {
+				if (exitPressed == "N") {
+					exitPressed = "Y";
+				} else {
+					exitPressed = "N";
+				}
+			}
+					
+		</script>
+	</head>
+	<body id="WifiMon" onload="initialise()">
+		<div class="container">
+			<div class="left">WiFi Monitor</div>
+			<div class="right">
+				<a class="button" href="#WifiMon" onclick="toggleAbout()">About</a>
+				<a class="button" href="#WifiMon" onclick="toggleExit()">Exit</a>
+			</div>
+		</div>
+		<div class="container">
+			<div id="serverText"><meter></meter></div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,24 @@
+<div class="container">
+	{{.Ssid}} {{.State}}
+</div>
+<div class="container">
+	{{.Error}}
+</div>
+<div class="container">
+	<div class="value">
+		{{.SignalQuality}}%
+	</div>
+	<div class="graph" >
+		<div class="meter_ie"  style="width: {{.SignalQuality}}%">
+		</div>
+	</div>
+</div>
+<div class="container">
+	<div class="value">
+		{{.Rssi}}db
+	</div>
+	<div class="graph">
+	<div class="meter_ie"  style="width: {{.RssiPercent}}%">
+		</div>
+	</div>
+</div>

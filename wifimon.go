@@ -10,6 +10,7 @@ import (
 	"strings"
 	"strconv"
 )
+const tp = `.\html\`
 
 var (
 	chStatus chan WiFiStatus	
@@ -18,9 +19,9 @@ var (
 	chExit  chan int8
 	
 )
-var templates = template.Must(template.ParseFiles("wifimon.html", "graph.html", "graph_ie.html","license.html", "exit.html","style.css"))
+var templates = template.Must(template.ParseFiles(tp+"wifimon.html", tp+"graph.html", tp+"graph_ie.html",tp+"license.html",tp+"exit.html",tp+"style.css"))
 
-func serveTemplate(w http.ResponseWriter, templateName string, data interface{}) {
+func serveTemplate(w http.ResponseWriter,  templateName string, data interface{}) {
 
 	w.Header().Set("Content-Type", mime.TypeByExtension(templateName[strings.LastIndex(templateName, "."):]))
 	w.Header().Set("Cache-Control", "max-age=0")
